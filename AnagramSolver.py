@@ -1,7 +1,18 @@
-from PyDictionary import PyDictionary
-import itertools as it
+"""
+Program: AnagramSolver.py
+Author: Lily Ellison
+Last Date Modified: 04/30/23
 
-dict1 = PyDictionary()
+The purpose of this program is to create a gui that accepts letters from the user and returns all words that can be
+made from those letters (words will have 3 letters or more)
+"""
+
+import itertools as it
+import datetime
+import tkinter
+
+
+
 possible_words = []
 input_letters = "fellows"
 all_words_by_length = {}
@@ -29,10 +40,13 @@ def words_from_num_letters(letters: str, num: int):
 
 
 def make_dictionary_by_number(letters: str):
+    f = open('words.txt', 'a', encoding="utf-8")
+    f.writelines(datetime.datetime.now().isoformat() + "\n")
     for number in range(3, len(letters)):
         words_to_add = words_from_num_letters(letters, number)
         all_words_by_length.update({str(number): str(words_to_add)})
-
+        f.writelines(str(number) + ': ' + str(words_to_add) + "\n")
+    return all_words_by_length
 
 
 def words_from_all_letters(letters: str):
@@ -43,20 +57,8 @@ def words_from_all_letters(letters: str):
             real_words.append(permutation)
     return real_words
 
-"""
-def find_all_words(letters: str):
-    max_len = len(letters)+1
-    for num in range(3, max_len):
-        value_list = words_from_num_letters(letters, num)
-        all_words_by_length[num] = value_list
-    return all_words_by_length
-"""
 
-make_dictionary_by_number(input_letters)
-
-print(all_words_by_length.get("5"))
-
-
+print(make_dictionary_by_number(input_letters))
 
 
 
